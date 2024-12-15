@@ -14,7 +14,7 @@ pipeline {
     timestamps()
   }
   stages {
-    stage("First step") {
+    stage("Deploy") {
       steps {
         sh '''
           echo "---------start---------"
