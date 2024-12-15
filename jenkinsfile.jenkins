@@ -6,6 +6,9 @@ pipeline {
   agent { 
     label 'built-in'
     }
+  triggers {
+    pollSCM('* * * * *')
+  }
   options {
     buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
     timestamps()
@@ -13,10 +16,12 @@ pipeline {
   stages {
     stage("First step") {
       steps {
-        sh 'echo "Hello World"'
         sh '''
-          echo "Multiline shell steps works too"
+          echo "---------start---------"
           ls -lah
+          echo "---------deploy---------"
+          scp -v -o StrictHostKeyChecking=no index.html student@10.0.0.126:/var/www/html
+          echo "---------finish---------"
         '''
       }
     }
